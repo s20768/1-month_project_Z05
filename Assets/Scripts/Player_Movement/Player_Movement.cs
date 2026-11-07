@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,14 @@ public class Player_Movement : MonoBehaviour
     [Header("Animacje")]
     [SerializeField] private Animator _animator;
 
+    // Zdarzenia dla tutorialu
+    public event Action Jumped;
+    public event Action DoubleJumped;
+    public event Action Attacked;
+
+    public float MoveInput => moveInput;
+    public bool IsGrounded => isGrounded;
+
     private static readonly int IsRunningHash = Animator.StringToHash("IsRunning");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int YVelocityHash = Animator.StringToHash("YVelocity");
@@ -34,6 +43,7 @@ public class Player_Movement : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D col;
     private float moveInput;
+    private bool inputLocked;
 
     private bool isGrounded;
     private float coyoteCounter;
@@ -55,11 +65,16 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
-        moveInput = ReadMoveInput();
+        moveInput = inputLocked ? 0f : ReadMoveInput();
         Flip();
         CheckGround();
-        HandleJump();
-        HandleAttack();
+
+        if (!inputLocked)
+        {
+            HandleJump();
+            HandleAttack();
+        }
+
         UpdateAnimator();
     }
 
@@ -113,11 +128,13 @@ public class Player_Movement : MonoBehaviour
         {
             Jump();
             coyoteCounter = 0f;
+            Jumped?.Invoke();
         }
         else if (canDoubleJump)
         {
             Jump();
             canDoubleJump = false;
+            DoubleJumped?.Invoke();
         }
     }
 
@@ -132,6 +149,7 @@ public class Player_Movement : MonoBehaviour
 
         if (!attackUnlocked) return;
 
+        // Lewy przycisk myszy lub Q
         bool attackPressed =
             (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
             (Keyboard.current != null && Keyboard.current.qKey.wasPressedThisFrame);
@@ -145,7 +163,10 @@ public class Player_Movement : MonoBehaviour
         {
             _animator.SetTrigger(isGrounded ? AttackHash : AirAttackHash);
         }
+
+        Attacked?.Invoke();
     }
+
     private void Flip()
     {
         if (moveInput == 0f) return;
@@ -159,13 +180,19 @@ public class Player_Movement : MonoBehaviour
     {
         if (_animator == null) return;
 
-        // Biegnie, gdy gracz trzyma klawisz kierunku
         _animator.SetBool(IsRunningHash, moveInput != 0f);
         _animator.SetBool(IsGroundedHash, isGrounded);
         _animator.SetFloat(YVelocityHash, rb.linearVelocity.y);
     }
 
-    // Uzywane przez TutorialZone (odblokowanie mechanik w tutorialu)
+    // Blokada sterowania (rozmowa z Krabem, cutscenki itp.)
+    public void SetInputLocked(bool value)
+    {
+        inputLocked = value;
+        if (value) moveInput = 0f;
+    }
+
+    // Odblokowywanie mechanik (tutorial, Krab)
     public void SetJumpUnlocked(bool value) => jumpUnlocked = value;
     public void SetDoubleJumpUnlocked(bool value) => doubleJumpUnlocked = value;
     public void SetAttackUnlocked(bool value) => attackUnlocked = value;
