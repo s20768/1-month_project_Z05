@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 77f6d8320706704498ffbdf7a4848823
+guid: 18f2b1981bd20c141ab2c5d0bd0503dd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4194887312952712787
-    second: Small Cloud 3_0
+      213: -1817439881670684769
+    second: Small Cloud 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -77,7 +77,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Small Cloud 3_0
+      name: Small Cloud 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 140
-        height: 39
+        width: 74
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da129aed634c8c5c0800000000000000
-      internalID: -4194887312952712787
+      spriteID: f9f046c8e0827c6e0800000000000000
+      internalID: -1817439881670684769
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Small Cloud 3_0: -4194887312952712787
+      Small Cloud 1_0: -1817439881670684769
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
